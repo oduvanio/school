@@ -178,4 +178,70 @@ function f6({ x = 10 } = {}, { y } = { y: 10 }) {}
 f3( [] ); // undefined undefined [] []
 f3( [1,2,3,4], 5, 6 ); // 1 2 [3,4] [5,6]
 
-//Страница 59
+// Нюанс, который сложно заметить
+function f6({ x = 10 } = {}, { y } = { y: 10 }) {
+	console.log( x, y );
+}
+f6(); // 10 10
+f6( undefined, undefined );	// 10 10
+f6( {}, undefined );	// 10 10
+f6( {}, {} );	// 10 undefined
+f6( undefined, {} ); // 10 undefined
+f6( { x: 2 }, { y: 3 } ); // 2 3
+
+
+// Вложенные значения по умолчанию
+var defaults = {
+	options: {
+		remove: true,
+		enable: false,
+		instance: {}
+	},
+	log: {
+		warn: true,
+		error: true
+	}
+};
+
+var config = {
+	options: {
+		remove: false,
+		instance: null
+	}
+};
+
+config.options = config.options || {};
+config.log = config.log || {};
+{
+	options: {
+		remove: config.options.remove = default.options.remove,
+		enable: config.options.enable = default.options.enable,
+		instance: config.options.instance = default.options.instance
+	} = {},
+	log: {
+		warn: config.log.warn = default.log.warn,
+		error: config.log.error = default.log.error
+	} = {}
+} = config;
+
+// сливаем defaults в config
+{
+	// деструктуризация (с присваиваниями значений по умолчанию)
+	let {
+		options: {
+			remove = defaults.options.remove,
+			enable = defaults.options.enable,
+			instance = defaults.options.instance
+		} = {},
+		log: {
+			warn = defaults.log.warn,
+			error = defaults.log.error
+		} = {}
+	} = config;
+	
+	// реструктуризация
+	config = {
+		options: { remove, enable, instance },
+		log: { warn, error }	
+	};
+}

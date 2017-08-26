@@ -52,3 +52,30 @@ function run(gen) {
 			})( next );
 		});
 }
+function ajax(bul) {
+	return new Promise( function pr(resolve, reject){
+		setTimeout(function(){
+			if (bul) {
+				resolve(bul);
+			} else {
+				reject(bul);
+			}
+		}, 1000);	
+	});
+}
+
+p = ajax(false);
+p.then(function(contents){
+	console.log(contents);
+	return ajax(false);		
+},
+function(err){
+	console.log(err);
+	return ajax("world");
+})
+.then(function(contents){
+	console.log(contents + ": продолжили, если не было ошибки");
+},
+function(err){
+	console.log(err + ": продолжили, если ошибка появилась");
+});

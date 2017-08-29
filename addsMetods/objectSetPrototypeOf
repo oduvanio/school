@@ -10,3 +10,14 @@ Object.setPrototypeOf( o2, o1 );
 
 // делегирует в 'o1.foo()'
 o2.foo(); // foo
+
+// Альтернативный вариант
+var o1 = {
+  foo() { console.log( "foo" ); }
+};
+var o2 = Object.setPrototypeOf( {
+  // .. определение o2 ..
+}, o1 );
+
+// делегирует в 'o1.foo()'
+o2.foo(); // foo

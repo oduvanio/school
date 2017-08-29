@@ -1,0 +1,12 @@
+var o1 = {
+  foo() { console.log( "foo" ); }
+};
+
+var o2 = {
+  // .. определение o2 ..
+};
+
+Object.setPrototypeOf( o2, o1 );
+
+// делегирует в 'o1.foo()'
+o2.foo(); // foo

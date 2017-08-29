@@ -1,0 +1,13 @@
+var a = [1, 2, 3];
+[...a.values()]; // [1, 2, 3]
+[...a.keys()];  // [0, 1, 2]
+[...a.entries()]; // [ [0, 1], [1, 2], [2, 3] ]
+[...a[Symbol.iterator]()]; [1, 2, 3]
+
+var a = [];
+a.length = 3;
+a[1] = 2;
+[...a.values()]; // [undefined, 2, undefined]
+[...a.keys()];  // [0, 1, 2]
+[...a.entries()]; // [ [0, undefined], [1, 2], [2, undefined] ]
+

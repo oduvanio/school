@@ -1,0 +1,13 @@
+var obj = { a: 1 },
+handlers = {
+    get(target,key,context) {
+        console.log( "accessing: ", key );
+        return Reflect.get(target,key,context);
+    }
+},
+pobj = new Proxy( obj, handlers );
+
+obj.a; // 1
+pobj.a;
+// обращение: a
+// 1
